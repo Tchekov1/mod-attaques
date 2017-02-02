@@ -218,11 +218,11 @@ echo "</font></b></legend>";
 //Tableau donnant la liste des attaques
 echo "<table width='100%'>";
 echo "<tr>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><b>Coordonnées</b></td>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><b>Date du recyclage</b></td>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><b>Métal Recyclé</b></td>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><b>Cristal Recyclé</b></td>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><b><font color='#FF0000'>Supprimer</font></b></td>";
+echo "<td class='c' align='center'><b>Coordonnées</b></td>";
+echo "<td class='c' align='center'>Date du recyclage</b></td>";
+echo "<td class='c' align='center'>Métal Recyclé</b></td>";
+echo "<td class='c' align='center'>Cristal Recyclé</b></td>";
+echo "<td class='c' align='center'><font color='#FF0000'>Supprimer</font></b></td>";
 
 echo "</tr>";
 echo "<tr>";
@@ -231,7 +231,7 @@ while (list($recy_coord, $recy_date, $recy_metal, $recy_cristal, $recy_id) = $db
     $recy_date = strftime("%d %b %Y à %Hh%M", $recy_date);
     $recy_metal = number_format($recy_metal, 0, ',', ' ');
     $recy_cristal = number_format($recy_cristal, 0, ',', ' ');
-    echo "<th align='center'>" .$masquer_coord ? '' :  $recy_coord . "</th>";
+    echo "<th align='center'>" . ($masquer_coord ? '' :  $recy_coord). "</th>";
     echo "<th align='center'>" . $recy_date . "</th>";
     echo "<th align='center'>" . $recy_metal . "</th>";
     echo "<th align='center'>" . $recy_cristal . "</th>";

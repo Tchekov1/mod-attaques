@@ -59,11 +59,13 @@ if ($nb_result != 0) {
         $timestamp = mktime(0, 0, 0, $month, 01, $year);
 
         list($metal_recy, $cristal_recy) = $db->sql_fetch_row($resultrecy);
+        $metal_recy = (int)$metal_recy;
+        $cristal_recy = (int)$cristal_recy;
 
         //On sauvegarde les résultats
         $query = "INSERT INTO " . TABLE_ATTAQUES_ARCHIVES . " ( `archives_id` , `archives_user_id` , `archives_nb_attaques` , `archives_date` , `archives_metal` , `archives_cristal` , `archives_deut` , `archives_pertes`, `archives_recy_metal`, `archives_recy_cristal` )
                 VALUES (
-                    NULL , '$user_data[user_id]', '$nb_ancattack', '$timestamp', '$metal', '$cristal', '$deut' , '$pertes', '$metal_recy', '$cristal_recy'
+                    NULL , '{$user_data['user_id']}', '{$nb_ancattack}', '{$timestamp}', '{$metal}', '{$cristal}', '{$deut}' , '{$pertes}', '{$metal_recy}', '{$cristal_recy}'
                 )";
         $db->sql_query($query);
 
@@ -76,14 +78,14 @@ if ($nb_result != 0) {
         $db->sql_query($query);
 
         //On prépare la liste des attaques en BBCode
-        $bbcode = "[color=" . $bbcolor[title] . "][b]Liste des attaques de " . $user_data[user_name] . "[/b] [/color]\n";
+        $bbcode = "[color=" . $bbcolor['title'] . "][b]Liste des attaques de " . $user_data['user_name'] . "[/b] [/color]\n";
         $bbcode .= "du 01/" . $month . "/" . $year . " au 31/" . $month . "/" . $year . "\n\n";
 
         while (list($attack_coord, $attack_date, $attack_metal, $attack_cristal, $attack_deut, $attack_pertes) = $db->sql_fetch_row($list)) {
             $attack_date = strftime("%d %b %Y %Hh%M", $attack_date);
             $bbcode .= "Le " . $attack_date . " victoire en " . $attack_coord . ".\n";
-            $bbcode .= "[color=" . $bbcolor[m_g] . "]" . $attack_metal . "[/color] de métal, [color=" . $bbcolor[c_g] . "]" . $attack_cristal . "[/color] de cristal et [color=" . $bbcolor[d_g] . "]" . $attack_deut . "[/color] de deut&eacute;rium ont &eacute;t&eacute; rapport&eacute;s.\n";
-            $bbcode .= "Les pertes s'&eacute;lèvent à [color=" . $bbcolor[perte] . "]" . $attack_pertes . "[/color].\n\n";
+            $bbcode .= "[color=" . $bbcolor['m_g'] . "]" . $attack_metal . "[/color] de métal, [color=" . $bbcolor['c_g'] . "]" . $attack_cristal . "[/color] de cristal et [color=" . $bbcolor['d_g'] . "]" . $attack_deut . "[/color] de deut&eacute;rium ont &eacute;t&eacute; rapport&eacute;s.\n";
+            $bbcode .= "Les pertes s'&eacute;lèvent à [color=" . $bbcolor['perte'] . "]" . $attack_pertes . "[/color].\n\n";
         }
 
         $bbcode .= "[url=http://board.ogsteam.fr/forums/sujet-1358-mod-gestion-attaques]G&eacute;n&eacute;r&eacute; par le module de gestion des attaques[/url]";
