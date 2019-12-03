@@ -80,7 +80,7 @@ $estUtilisateurCourant = $user_id == $user_data["user_id"];
 $masquer_coord = false;
 if(!$estUtilisateurCourant)	
 {
-    $result = \Ogsteam\Ogspy\mod_get_user_option($user_id, 'masquer_coord');
+    $result = mod_get_user_option($user_id, 'masquer_coord');
     if($result == null || $result['masquer_coord'] == '1')
 		$masquer_coord = true;	
 }

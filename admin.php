@@ -13,7 +13,7 @@ if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 
 global $db, $table_prefix, $prefixe;
 // lecture des bbcodes dans la db
-$bbcolor = \Ogsteam\Ogspy\mod_get_option('bbcodes');
+$bbcolor = mod_get_option('bbcodes');
 $bbcolor = unserialize($bbcolor[0]);
 
 // Paramètres de configurations transmis par le form
@@ -39,7 +39,7 @@ if (isset($pub_submit)) {
             $config['histo'] = 0;
         }
         $sqldata = serialize($config);
-        \Ogsteam\Ogspy\mod_set_option('config', $sqldata);
+        mod_set_option('config', $sqldata);
     }
     echo "<span  style=\"font-size: x-small; color: #00FF40; \">Configuration sauvegardée</span><br />";
 }
@@ -57,7 +57,7 @@ if (isset($pub_submitbb)) {
     $bbcolor['renta'] = substr($pub_renta, 0, 7);
     //echo "#".dechex(hexdec(substr($pub_title,0,7)))."\n\r"; test de validation de code hexa .. pb si débute par 00
     $sqldata = serialize($bbcolor);
-    \Ogsteam\Ogspy\mod_set_option('bbcodes', $sqldata);
+    mod_set_option('bbcodes', $sqldata);
     echo "<span  style=\"font-size: x-small; color: #00FF40; \">Couleurs BBcode enregistrées</span><br />";
 }
 // Fin paramètres couleurs BBcodes

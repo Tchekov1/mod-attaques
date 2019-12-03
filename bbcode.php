@@ -18,7 +18,7 @@ echo "<script type='text/javascript' language='javascript' src='" . FOLDER_ATTCK
 global $db, $table_prefix;
 
 // lecture des bbcodes dans la db
-$bbcolor = \Ogsteam\Ogspy\mod_get_option('bbcodes');
+$bbcolor = mod_get_option('bbcodes');
 $bbcolor = unserialize($bbcolor[0]);
 
 //Gestion des dates

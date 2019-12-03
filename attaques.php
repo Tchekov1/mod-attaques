@@ -12,7 +12,7 @@
 if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 
 // Appel des Javascripts
-echo "<script type='text/javascript' language='javascript' src='" . FOLDER_ATTCK . "/attack.js'></script>";
+echo "<script type='text/javascript' src='" . FOLDER_ATTCK . "/attack.js'></script>";
 
 //Définitions
 global $db, $table_prefix, $prefixe;
@@ -36,9 +36,9 @@ $nb_result = $db->sql_numrows($result);
 
 //Si le nombre d'attaques n'appartenant pas au mois actuel est different de 0, on entre alors dans la partie sauvegarde des résultats anterieurs
 if ($nb_result != 0) {
-    echo "<font color='#FF0000'>Vos attaques du ou des mois précédent(s) ont été supprimé(s). Seuls les gains restent accessibles dans la partie Espace Archives<br>La liste de vos attaques qui viennent d'être supprimées est consultable une dernière fois. Pensez à la sauvegarder !!!</font>";
+    echo "<span style=\"color: #FF0000; \">Vos attaques du ou des mois précédent(s) ont été supprimé(s). Seuls les gains restent accessibles dans la partie Espace Archives<br>La liste de vos attaques qui viennent d'être supprimées est consultable une dernière fois. Pensez à la sauvegarder !!!</span>";
 // On récupère les paramètres bbcolors
-    $bbcolor = \Ogsteam\Ogspy\mod_get_option('bbcodes');
+    $bbcolor = mod_get_option('bbcodes');
     $bbcolor = unserialize($bbcolor[0]);
 
     while (list($month, $year, $metal, $cristal, $deut, $pertes) = $db->sql_fetch_row($result)) {
@@ -57,6 +57,9 @@ if ($nb_result != 0) {
         $timestamp = mktime(0, 0, 0, $month, 01, $year);
 
         list($metal_recy, $cristal_recy) = $db->sql_fetch_row($resultrecy);
+        // Sql Fetch Row can set values to null if no result
+        if($metal_recy == null ) $metal_recy = 0;
+        if($cristal_recy == null ) $cristal_recy = 0;
 
         //On sauvegarde les résultats
         $query = "INSERT INTO " . TABLE_ATTAQUES_ARCHIVES . " ( `archives_id` , `archives_user_id` , `archives_nb_attaques` , `archives_date` , `archives_metal` , `archives_cristal` , `archives_deut` , `archives_pertes`, `archives_recy_metal`, `archives_recy_cristal` )
@@ -87,7 +90,7 @@ if ($nb_result != 0) {
         $bbcode .= "[url=http://board.ogsteam.fr/forums/sujet-1358-mod-gestion-attaques]G&eacute;n&eacute;r&eacute; par le module de gestion des attaques[/url]";
 
         echo "<br><br>";
-        echo "<fieldset><legend><b><font color='#0080FF'>Liste de vos attaques du 01/" . $month . "/" . $year . " au 31/" . $month . "/" . $year . "</font></legend>";
+        echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Liste de vos attaques du 01/" . $month . "/" . $year . " au 31/" . $month . "/" . $year . "</span></legend>";
         echo "<br>";
         echo "<form method='post'><textarea rows='10' cols='15' id='$bbcode'>$bbcode</textarea></form></fieldset>";
     }
@@ -158,7 +161,7 @@ $estUtilisateurCourant = $user_id == $user_data["user_id"];
 $masquer_coord = false;
 if(!$estUtilisateurCourant)	
 {
-	$result = \Ogsteam\Ogspy\mod_get_user_option($user_id, 'masquer_coord');
+	$result = mod_get_user_option($user_id, 'masquer_coord');
 	if($result == null || $result['masquer_coord'] == '1')
 		$masquer_coord = true;	
 }
@@ -231,7 +234,7 @@ $pub_date_to = strftime("%d %b %Y %H:%M", $pub_date_to);
 
 
 //Création du field pour choisir l'affichage (attaque du jour, de la semaine ou du mois
-echo "<fieldset><legend><b><font color='#0080FF'>Paramètres d'affichage des attaques ";
+echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Paramètres d'affichage des attaques ";
 echo help("changer_affichage");
 echo "</font></b></legend>";
 
@@ -268,7 +271,7 @@ echo "</fieldset>";
 echo "<br><br>";
 
 //Création du field pour voir les gains des attaques
-echo "<fieldset><legend><b><font color='#0080FF'>Résultats des attaques du " . $pub_date_from . " au " . $pub_date_to . " de " . $users[$user_id];
+echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Résultats des attaques du " . $pub_date_from . " au " . $pub_date_to . " de " . $users[$user_id];
 echo help("resultats");
 echo "</font></b></legend>";
 
@@ -306,10 +309,10 @@ echo "</table>";
 echo "</p></fieldset><br><br>";
 
 //Création du field pour voir la liste des attaques
-echo "<fieldset><legend><b><font color='#0080FF'>Liste des attaques du " . $pub_date_from . " au " . $pub_date_to . " ";
+echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Liste des attaques du " . $pub_date_from . " au " . $pub_date_to . " ";
 echo " : " . $nb_attack . " attaque(s) ";
 echo help("liste_attaques");
-echo "</font></b></legend>";
+echo "</span></b></legend>";
 
 //Debut du lien pour le changement de l'ordre d'affichage
 $link = "index.php?action=attaques&date_from=" . $pub_date_from . "&date_to=" . $pub_date_to . " &user_id=" . $user_id;
@@ -323,7 +326,7 @@ echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_
 echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_cristal&sens=1'><img src='" . $prefixe . "assets/images/asc.png'></a> <b>Cristal Gagné</b> <a href='" . $link . "&order_by=attack_cristal&sens=2'><img src='" . $prefixe . "assets/images/desc.png'></a></td>";
 echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_deut&sens=1'><img src='" . $prefixe . "assets/images/asc.png'></a> <b>Deut&eacute;rium Gagné</b> <a href='" . $link . "&order_by=attack_deut&sens=2'><img src='" . $prefixe . "assets/images/desc.png'></a></td>";
 echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_pertes&sens=1'><img src='" . $prefixe . "assets/images/asc.png'></a> <b>Pertes Attaquant</b> <a href='" . $link . "&order_by=attack_pertes&sens=2'><img src='" . $prefixe . "assets/images/desc.png'></a></td>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><b><font color='#FF0000'>Supprimer</font></b></td>";
+echo "<td class=" . 'c' . " align=" . 'center' . "><b><span style=\"color: #FF0000; \">Supprimer</span></b></td>";
 
 echo "</tr>";
 echo "<tr>";

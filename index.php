@@ -27,7 +27,7 @@ if(!defined("TABLE_MOD_USER_CFG"))
 
 
 //récupération des paramètres de config
-$config = \Ogsteam\Ogspy\mod_get_option('config');
+$config = mod_get_option('config');
 $config = unserialize($config[0]);
 
 // Appel des fonctions du module

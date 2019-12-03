@@ -58,15 +58,11 @@ function menu ($pub_page)
     $pages['texte'][$i] = 'Admin';
     $pages['admin'][$i] = 1;
 
-    $pages['fichier'][++$i] = 'changelog';
-    $pages['texte'][$i] = '&nbsp;Changelog&nbsp;';
-    $pages['admin'][$i] = 1;
-
     //Construction du menu
     echo "	<table><tr align='center'>";
     for ($i = 0; $i < count($pages['fichier']); $i++) if (($pages['admin'][$i] && IsUserAdmin()) || (!$pages['admin'][$i])) if ($pub_page != $pages['fichier'][$i]) {
         echo "\t<td class='c' width='150' onclick=\"window.location = 'index.php?action=attaques&page=" . $pages['fichier'][$i] . "';\">";
-        echo "<a style='cursor:pointer'><font color='lime'>" . $pages['texte'][$i] . "</font></a></td>";
+        echo "<a style='cursor:pointer'><span style=\"color: lime; \">" . $pages['texte'][$i] . "</span></a></td>";
     } else
         echo "\t<th width='150'><a>" . $pages['texte'][$i] . "</a></th>";
     echo "\t\t</tr>\n\t\t</table>";
