@@ -12,7 +12,7 @@
 if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 
 // Appel des Javascripts
-echo "<script type='text/javascript' language='javascript' src='" . FOLDER_ATTCK . "/attack.js'></script>";
+echo "<script type='text/javascript' src='" . FOLDER_ATTCK . "/attack.js'></script>";
 
 //Définitions
 global $db, $table_prefix;
@@ -33,14 +33,14 @@ if (isset($pub_recy_id)) {
     $pub_recy_id = intval($pub_recy_id);
 
     //On récupère l'id de l'utilisateur qui a enregistré cette attaque
-    $query = "SELECT recy_user_id FROM " . TABLE_ATTAQUES_RECYCLAGES . " WHERE recy_id='$pub_recy_id'";
+    $query = "SELECT `recy_user_id` FROM " . TABLE_ATTAQUES_RECYCLAGES . " WHERE `recy_id`='$pub_recy_id'";
     $result = $db->sql_query($query);
     list($user) = $db->sql_fetch_row($result);
 
     if ($user == $user_data['user_id']) {
-        $query = "DELETE FROM " . TABLE_ATTAQUES_RECYCLAGES . " WHERE recy_id='$pub_recy_id'";
+        $query = "DELETE FROM " . TABLE_ATTAQUES_RECYCLAGES . " WHERE `recy_id` = '$pub_recy_id'";
         $db->sql_query($query);
-        echo "<blink><font color='FF0000'>Le recyclage a bien été supprimée.</font></blink>";
+        echo "<span style=\"color: #FF0000; \">Le recyclage a bien été supprimé.</span>";
 
         //On ajoute l'action dans le log
         $line = $user_data['user_name'] . " supprime l'un de ses recyclage dans le module de gestion des attaques";
@@ -48,7 +48,7 @@ if (isset($pub_recy_id)) {
         $line = "/*" . date("d/m/Y H:i:s") . '*/ ' . $line;
         write_file(PATH_LOG_TODAY . $fichier, "a", $line);
     } else {
-        echo "<blink><font color='FF0000'>Vous n'avez pas le droit d'effacer ce recyclage !!!</font></blink>";
+        echo "<span style=\"color: #FF0000; \">Vous n'avez pas le droit d'effacer ce recyclage !!!</span>";
 
         //On ajoute l'action dans le log
         $line = $user_data[user_name] . " a tenté de supprimer un recyclage qui appartient à un autre utilisateurs dans le module de gestion des attaques";
@@ -71,10 +71,12 @@ while($row = $db->sql_fetch_row($result))
 	$users[$row[0]] = $row[1];
 
 // Si un utilisateur a été sélectionné, on vérifie que l'on peut afficher les rapports de celui-ci
-if(isset($pub_user_id) && isset($users[$pub_user_id]))
+if(isset($pub_user_id) && isset($users[$pub_user_id])) {
 	$user_id = $pub_user_id;
-else
+}
+else {
 	$user_id = $user_data["user_id"];
+}
 
 $estUtilisateurCourant = $user_id == $user_data["user_id"];
 $masquer_coord = false;
@@ -128,9 +130,9 @@ $pub_date_from = strftime("%d %b %Y %H:%M", $pub_date_from);
 $pub_date_to = strftime("%d %b %Y %H:%M", $pub_date_to);
 
 //Création du field pour choisir l'affichage (attaque du jour, de la semaine ou du mois
-echo "<fieldset><legend><b><font color='#0080FF'>Date d'affichage des recyclages ";
+echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Date d'affichage des recyclages ";
 echo help("changer_affichage");
-echo "</font></b></legend>";
+echo "</span></b></legend>";
 
 echo "Afficher mes recyclages : ";
 echo "<form action='index.php?action=attaques&page=recyclages' method='post' name='date'>";
@@ -163,9 +165,9 @@ echo "</fieldset>";
 echo "<br><br>";
 
 //Création du field pour voir les gains des attaques
-echo "<fieldset><legend><b><font color='#0080FF'>Résultats des recyclages du " . $pub_date_from . " au " . $pub_date_to . " ";
+echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Résultats des recyclages du " . $pub_date_from . " au " . $pub_date_to . " ";
 echo help("resultats");
-echo "</font></b></legend>";
+echo "</span></b></legend>";
 
 //Résultat requete
 list($recy_metal, $recy_cristal) = $db->sql_fetch_row($resultgains);
@@ -185,7 +187,7 @@ if ((!isset($recy_metal)) && (!isset($recy_cristal)) && $recy_metal == 0 && $rec
     echo "Pas de graphique disponible";
 } else {
     /**   GRAPHIQUE   **/
-    echo "<div id='graphique' style='height: 350px; width: 800px; margin: 0pt auto; clear: both;'></div>";
+    echo "<div id='graphique' style='height: 350px; width: 800px; margin: 0 auto; clear: both;'></div>";
     /** FIN GRAPHIQUE **/
     echo create_pie_numbers($recy_metal . "_x_" . $recy_cristal, "Métal_x_Cristal", "Gains des recyclages", "graphique");
 }
@@ -208,10 +210,10 @@ echo "</table>";
 echo "</p></fieldset><br><br>";
 
 //Création du field pour voir la liste des attaques
-echo "<fieldset><legend><b><font color='#0080FF'>Liste des recyclages du " . $pub_date_from . " au " . $pub_date_to . " ";
+echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Liste des recyclages du " . $pub_date_from . " au " . $pub_date_to . " ";
 echo " : " . $nb_recy . " recyclage(s) ";
 echo help("liste_recy");
-echo "</font></b></legend>";
+echo "</span></b></legend>";
 
 //Tableau donnant la liste des attaques
 echo "<table width='100%'>";
@@ -220,7 +222,7 @@ echo "<td class=" . 'c' . " align=" . 'center' . "><b>Coordonnées</b></td>";
 echo "<td class=" . 'c' . " align=" . 'center' . "><b>Date du recyclage</b></td>";
 echo "<td class=" . 'c' . " align=" . 'center' . "><b>Métal Recyclé</b></td>";
 echo "<td class=" . 'c' . " align=" . 'center' . "><b>Cristal Recyclé</b></td>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><b><font color='#FF0000'>Supprimer</font></b></td>";
+echo "<td class=" . 'c' . " align=" . 'center' . "><b><span style=\"color: #FF0000; \">Supprimer</span></b></td>";
 
 echo "</tr>";
 echo "<tr>";
@@ -305,7 +307,7 @@ if ($config['histo'] == 1) {
     $series = "{name: 'Métal', data: [" . $metal . "] }, " . "{name: 'Cristal', data: [" . $cristal . "] }, " . "{name: 'Deutérium', data: [" . $deuterium . "] }";
 
     /** GRAPHIQUE **/
-    echo "<div id='graphiquemois' style='height: 350px; width: 1200px; margin: 0pt auto; clear: both;'></div>";
+    echo "<div id='graphiquemois' style='height: 350px; width: 1200px; margin: 0 auto; clear: both;'></div>";
     /** GRAPHIQUE **/
 
     echo "<script type='text/javascript'>
