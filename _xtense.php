@@ -9,7 +9,7 @@
  *   created    : 17/02/2008
  *   modified    :
  **/
-namespace Ogsteam\Ogspy;
+
 // L'appel direct est interdit....
 if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 
@@ -154,7 +154,7 @@ function attack_rc ($rapport)
  */
 function attack_rr ($rapport)
 {
-    global $db, $table_prefix, $attack_config, $user_data;
+    global $db, $table_prefix, $user_data;
 
     define("TABLE_ATTAQUES_RECYCLAGES", $table_prefix . "attaques_recyclages");
 
@@ -179,7 +179,16 @@ function attack_rr ($rapport)
     }
 }
 
-/**
+function read_config ()
+{
+    global $attack_config;
+    
+    //récupération des paramètres de config
+    var $configs = mod_get_option('config');
+    foreach($configs as $config) $attack_config = unserialize($config);
+}
+
+/*
  * @param $rapport
  * @return mixed|string
  */
@@ -192,13 +201,3 @@ function remove_htm ($rapport)
     return $rapport;
 }
 
-function read_config ()
-{
-    global $attack_config;
-
-    //récupération des paramètres de config
-    var $configs = \Ogsteam\Ogspy\mod_get_option('config');
-    foreach($configs as $config) {
-        $attack_config = unserialize($config);
-    }
-}

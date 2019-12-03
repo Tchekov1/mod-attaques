@@ -7,7 +7,6 @@
  * @link http://www.ogsteam.fr
  * @version : 0.8a
  */
-namespace Ogsteam\Ogspy;
 
 //L'appel direct est interdit
 if (!defined('IN_SPYOGAME')) die("Hacking attempt");
@@ -17,7 +16,7 @@ $query = "SELECT `active` FROM `" . TABLE_MOD . "` WHERE `action`='attaques' AND
 if (!$db->sql_numrows($db->sql_query($query))) die("Hacking attempt");
 
 // Appel des Javascripts
-echo "<script type='text/javascript' language='javascript' src='" . FOLDER_ATTCK . "/attack.js'></script>";
+echo "<script type='text/javascript' src='" . FOLDER_ATTCK . "/attack.js'></script>";
 
 //Gestion des dates
 $jour = date("j");
@@ -81,7 +80,7 @@ list($recy_metal, $recy_cristal) = $db->sql_fetch_row($resultgainsrecy);
 //Définitions
 global $db, $table_prefix, $prefixe;
 
-echo "<fieldset><legend><b><font color='#0080FF'>Rentabilité Hebdomadaire</font></b></legend>";
+echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Rentabilité Hebdomadaire</span></b></legend>";
 /** GRAPHIQUE **/
 echo "<div id='graphique' style='height: 350px; width: 800px; margin: 0pt auto; clear: both;'></div>";
 /** GRAPHIQUE **/
@@ -249,7 +248,7 @@ echo "</div>";
 
 // *****************************************************************************************************
 
-echo "<fieldset><legend><b><font color='#0080FF'>Rentabilité Mensuelle</font></b></legend>";
+echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Rentabilité Mensuelle</span></b></legend>";
 
 /** GRAPHIQUE **/
 echo "<div id='graphiquemois' style='height: 350px; width: 410px; margin: 0pt auto; clear: both;'></div>";

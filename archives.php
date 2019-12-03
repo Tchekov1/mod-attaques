@@ -7,13 +7,13 @@
  * @link http://www.ogsteam.fr
  * @version : 0.8a
  */
-namespace Ogsteam\Ogspy;
+
 ?>
-    <SCRIPT language="JavaScript">
+    <script>
         function selectionner() {
             document.getElementById('bbcode').select();
         }
-    </SCRIPT>
+    </script>
 <?php
 
 //L'appel direct est interdit
@@ -27,9 +27,9 @@ $result = $db->sql_query($query);
 $nbline = $db->sql_numrows($result);
 
 //Fieldset pour seletionner les dates de visualisation des gains
-echo "<fieldset><legend><b><font color='#0080FF'>Date d'affichage des attaques ";
+echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Date d'affichage des attaques ";
 echo help("changer_affichage");
-echo "</font></b></legend>";
+echo "</span></b></legend>";
 
 echo "Afficher mes résultats anterieurs : ";
 echo "<form action='index.php?action=attaques&page=archive' method='post'>";
@@ -54,7 +54,7 @@ echo "</fieldset>";
 echo "<br><br>";
 
 //Si le message de sauvegarde des resultats est défini, on l'affiche
-if (isset($pub_message)) echo "<font color='FF0000'><big>La liste de vos attaques étant anterieure à ce mois, elle a été supprimée. Les résultats de vos attaques ont été sauvegardés, ils seront désormais accessibles sur cette page</big></font>";
+if (isset($pub_message)) echo "<span style=\"color: #FF0000; \">La liste de vos attaques étant anterieure à ce mois, elle a été supprimée. Les résultats de vos attaques ont été sauvegardés, ils seront désormais accessibles sur cette page</span>";
 
 if ((isset($pub_mois)) && (isset($pub_annee))) {
     $pub_mois = intval($pub_mois);
@@ -71,8 +71,8 @@ if ((isset($pub_mois)) && (isset($pub_annee))) {
     if ($nb_result == 0) {
         $date_from = strftime("%b %Y", $date_from);
 
-        echo "<fieldset><legend><b><font color='#0080FF'>Archives des attaques du mois de " . $date_from . "</font></b></legend>";
-        echo "<font color='#FF0000'>Vous n'avez pas de resultat pour cette date</font>";
+        echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Archives des attaques du mois de " . $date_from . "</span></b></legend>";
+        echo "<span style=\"color: #FF0000; \">Vous n'avez pas de resultat pour cette date</span>";
         echo "</fieldset><br><br>";
     } else {
         list($archives_nb_attaques, $archives_date, $archives_metal, $archives_cristal, $archives_deut, $archives_pertes, $archives_recy_metal, $archives_recy_cristal, $archives_id) = $db->sql_fetch_row($resultgains);
@@ -84,7 +84,7 @@ if ((isset($pub_mois)) && (isset($pub_annee))) {
         $renta = $total_gains - $archives_pertes + $archives_recy_metal + $archives_recy_cristal;
         $total_recy = $archives_recy_metal + $archives_recy_cristal;
 
-        echo "<fieldset><legend><b><font color='#0080FF'>Archives des attaques du mois de " . $date_from . "</font></b></legend>";
+        echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Archives des attaques du mois de " . $date_from . "</span></b></legend>";
 //echo"<table width='100%'><tr align='left'>";
 
 // Afficher l'image du graphique
