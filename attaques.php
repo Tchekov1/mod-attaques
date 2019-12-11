@@ -39,7 +39,7 @@ if ($nb_result != 0) {
     echo "<span style=\"color: #FF0000; \">Vos attaques du ou des mois précédent(s) ont été supprimé(s). Seuls les gains restent accessibles dans la partie Espace Archives<br>La liste de vos attaques qui viennent d'être supprimées est consultable une dernière fois. Pensez à la sauvegarder !!!</span>";
 // On récupère les paramètres bbcolors
     $bbcolor = mod_get_option('bbcodes');
-    $bbcolor = unserialize($bbcolor[0]);
+    $bbcolor = json_decode($bbcolor[0]);
 
     while (list($month, $year, $metal, $cristal, $deut, $pertes) = $db->sql_fetch_row($result)) {
         //On recupère la liste complète des attaques de la période afin de pouvoir les compter
@@ -320,12 +320,12 @@ $link = "index.php?action=attaques&date_from=" . $pub_date_from . "&date_to=" . 
 //Tableau donnant la liste des attaques
 echo "<table width='100%'>";
 echo "<tr>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_coord&sens=1'><img src='" . $prefixe . "assets/images/asc.png'></a> <b>Coordonnées</b> <a href='" . $link . "&order_by=attack_coord&sens=2'><img src='" . $prefixe . "assets/images/desc.png'></a></td>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_date&sens=1'><img src='" . $prefixe . "assets/images/asc.png'></a> <b>Date de l'Attaque</b> <a href='" . $link . "&order_by=attack_date&sens=2'><img src='" . $prefixe . "assets/images/desc.png'></a></td>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_metal&sens=1'><img src='" . $prefixe . "assets/images/asc.png'></a> <b>Métal Gagné</b> <a href='" . $link . "&order_by=attack_metal&sens=2'><img src='" . $prefixe . "assets/images/desc.png'></a></td>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_cristal&sens=1'><img src='" . $prefixe . "assets/images/asc.png'></a> <b>Cristal Gagné</b> <a href='" . $link . "&order_by=attack_cristal&sens=2'><img src='" . $prefixe . "assets/images/desc.png'></a></td>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_deut&sens=1'><img src='" . $prefixe . "assets/images/asc.png'></a> <b>Deut&eacute;rium Gagné</b> <a href='" . $link . "&order_by=attack_deut&sens=2'><img src='" . $prefixe . "assets/images/desc.png'></a></td>";
-echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_pertes&sens=1'><img src='" . $prefixe . "assets/images/asc.png'></a> <b>Pertes Attaquant</b> <a href='" . $link . "&order_by=attack_pertes&sens=2'><img src='" . $prefixe . "assets/images/desc.png'></a></td>";
+echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_coord&sens=1'><img src='" . $prefixe . "images/asc.png'></a> <b>Coordonnées</b> <a href='" . $link . "&order_by=attack_coord&sens=2'><img src='" . $prefixe . "images/desc.png'></a></td>";
+echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_date&sens=1'><img src='" . $prefixe . "images/asc.png'></a> <b>Date de l'Attaque</b> <a href='" . $link . "&order_by=attack_date&sens=2'><img src='" . $prefixe . "images/desc.png'></a></td>";
+echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_metal&sens=1'><img src='" . $prefixe . "images/asc.png'></a> <b>Métal Gagné</b> <a href='" . $link . "&order_by=attack_metal&sens=2'><img src='" . $prefixe . "images/desc.png'></a></td>";
+echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_cristal&sens=1'><img src='" . $prefixe . "images/asc.png'></a> <b>Cristal Gagné</b> <a href='" . $link . "&order_by=attack_cristal&sens=2'><img src='" . $prefixe . "images/desc.png'></a></td>";
+echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_deut&sens=1'><img src='" . $prefixe . "images/asc.png'></a> <b>Deut&eacute;rium Gagné</b> <a href='" . $link . "&order_by=attack_deut&sens=2'><img src='" . $prefixe . "images/desc.png'></a></td>";
+echo "<td class=" . 'c' . " align=" . 'center' . "><a href='" . $link . "&order_by=attack_pertes&sens=1'><img src='" . $prefixe . "images/asc.png'></a> <b>Pertes Attaquant</b> <a href='" . $link . "&order_by=attack_pertes&sens=2'><img src='" . $prefixe . "images/desc.png'></a></td>";
 echo "<td class=" . 'c' . " align=" . 'center' . "><b><span style=\"color: #FF0000; \">Supprimer</span></b></td>";
 
 echo "</tr>";

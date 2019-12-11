@@ -28,7 +28,9 @@ if(!defined("TABLE_MOD_USER_CFG"))
 
 //récupération des paramètres de config
 $config = mod_get_option('config');
-$config = unserialize($config[0]);
+$config = json_decode($config, true);
+print_r($config);
+
 
 // Appel des fonctions du module
 include(FOLDER_ATTCK . "/attack_include.php");
@@ -102,6 +104,6 @@ switch($pub_page)
 echo "</div></div>";
 // Version number at the bottom of the page 
 require_once(FOLDER_ATTCK . "/footer.php");
-echo "<br/>";
+echo "<br>";
 //Insertion du bas de page d'OGSpy
 require_once("views/page_tail.php");

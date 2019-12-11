@@ -17,6 +17,75 @@ function IsUserAdmin ()
 }
 
 //-------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Mod Configs: Add or updates a configuration option for the mod
+ * @param string $param Name of the parameter
+ * @param integer $user_id Id of the user
+ * @param string $value Value of the parameter
+ * @return array returns true if the parameter is correctly saved. false in other cases.
+ */
+function mod_set_user_option($user_id, $param, $value)
+{
+    global $db;
+
+    if (!check_var($param, "Text")) {
+        redirection("index.php?action=message&id_message=errordata&info");
+    }
+    if (!check_var($user_id, "Num")) {
+        redirection("index.php?action=message&id_message=errordata&info");
+    }
+
+    $query = "REPLACE INTO `" . TABLE_MOD_USER_CFG . "`(`mod`, `user_id`, `config`, `value`) VALUES('Attaques' ," . $user_id . ", '" . $param . "' , '" . $value ."')";
+    $result = $db->sql_query($query);
+    return $result;
+}
+
+/**
+ * Mod Configs: Add or updates a configuration option for the mod
+ * @param integer $user_id Id of the user
+ * @param string $param Name of the parameter
+ * @return array returns true if the parameter is correctly saved. false in other cases.
+ */
+function mod_get_user_option( $user_id,$param)
+{
+    global $db;
+
+    if (!check_var($param, "Text")) {
+        redirection("index.php?action=message&id_message=errordata&info");
+    }
+    if (!check_var($user_id, "Num")) {
+        redirection("index.php?action=message&id_message=errordata&info");
+    }
+
+    $query = "SELECT `value` FROM `" . TABLE_MOD_USER_CFG . "` WHERE `mod`='Attaques' and `user_id`=" . $user_id ." and `config`='" . $param . "'";
+    $result = $db->sql_query($query);
+    $user_config = $db->sql_fetch_row($result);
+    $user_config = $user_config['value'];
+
+    return $user_config;
+}
+
+/**
+ * Mod Configs: Deletes a parameter for a mod and a user
+ * @param string $param Name of the parameter
+ * @param $user_id
+ * @return void returns true if the parameter is correctly saved. false in other cases.
+ */
+function mod_del_user_option($user_id , $param)
+{
+    global $db;
+    if (!check_var($param, "Text")) {
+        redirection("index.php?action=message&id_message=errordata&info");
+    }
+    if (!check_var($user_id, "Num")) {
+        redirection("index.php?action=message&id_message=errordata&info");
+    }
+
+    $query = "DELETE FROM `" . TABLE_MOD_USER_CFG . "` WHERE `mod`='Attaques' and `user_id`=" . $user_id ." and `config`=". $param;
+    $result = $db->sql_query($query);
+
+}
 // Création du menu
 /**
  * @param $pub_page

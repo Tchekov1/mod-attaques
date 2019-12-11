@@ -82,6 +82,7 @@ if (!$db->sql_numrows($db->sql_query("SHOW TABLES LIKE '" . $table_prefix . "mod
 				`user_id` INT(11) NOT NULL,
 				`value` VARCHAR(255) NOT NULL,
 			 PRIMARY KEY (`mod`, `config`, `user_id`),
+			 UNIQUE KEY `config` (`config`),
 			)
 			COLLATE='utf8_general_ci'";
     $db->sql_query($query);

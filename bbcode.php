@@ -19,7 +19,7 @@ global $db, $table_prefix;
 
 // lecture des bbcodes dans la db
 $bbcolor = mod_get_option('bbcodes');
-$bbcolor = unserialize($bbcolor[0]);
+$bbcolor = json_decode($bbcolor[0]);
 
 //Gestion des dates
 $date = date("j");

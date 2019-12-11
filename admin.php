@@ -14,7 +14,7 @@ if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 global $db, $table_prefix, $prefixe;
 // lecture des bbcodes dans la db
 $bbcolor = mod_get_option('bbcodes');
-$bbcolor = unserialize($bbcolor[0]);
+$bbcolor = json_decode($bbcolor,true);
 
 // Paramètres de configurations transmis par le form
 if (isset($pub_submit)) {
@@ -38,7 +38,7 @@ if (isset($pub_submit)) {
         } else {
             $config['histo'] = 0;
         }
-        $sqldata = serialize($config);
+        $sqldata = json_encode($config);
         mod_set_option('config', $sqldata);
     }
     echo "<span  style=\"font-size: x-small; color: #00FF40; \">Configuration sauvegardée</span><br />";
@@ -56,7 +56,7 @@ if (isset($pub_submitbb)) {
     $bbcolor['perte'] = substr($pub_perte, 0, 7);
     $bbcolor['renta'] = substr($pub_renta, 0, 7);
     //echo "#".dechex(hexdec(substr($pub_title,0,7)))."\n\r"; test de validation de code hexa .. pb si débute par 00
-    $sqldata = serialize($bbcolor);
+    $sqldata = json_encode($bbcolor);
     mod_set_option('bbcodes', $sqldata);
     echo "<span  style=\"font-size: x-small; color: #00FF40; \">Couleurs BBcode enregistrées</span><br />";
 }
@@ -86,7 +86,7 @@ if (isset($pub_submitpurg)) {
 // Nettoyage des valeurs non attribués dans la DB
 if (isset($pub_submitid)) {
     //on récupère les données recues par $_POST sans oublié d'enlevé les slash ^^
-    $userid = unserialize(stripslashes($pub_val_id));
+    $userid = json_decode(stripslashes($pub_val_id));
     foreach ($userid as $value) {
         // En fonction du type de la table, on génère la query
         if ($value[0] == "archive") {
@@ -335,7 +335,7 @@ for ($i = 0; $i < count($recy); $i++) {
 //Si j'ai trouvé des données orphelines et seulement dans ce cas, j'affiche un simple form
 if ($inval_id > 0) {
     //On serialize l'array pour le transmettre par $_POST dans le form
-    $trans_id = serialize($id);
+    $trans_id = json_encode($id);
     echo "<form name='form4' style=\"margin:0;padding:0; alignment: center;\" action='index.php?action=attaques&page=admin' enctype='multipart/form-data' method='post'>";
     echo "<table width='60%' border='0'><tr>";
     echo "<th>Des données n'appartenant à aucun joueur actif ont été trouvées;
