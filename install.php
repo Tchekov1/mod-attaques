@@ -74,7 +74,7 @@ if ($db->sql_numrows($db->sql_query("SHOW TABLES LIKE '" . $table_prefix . "xten
 }
 
 // On vérifie que la table mod_user_config existe
-if (!$db->sql_numrows($db->sql_query("SHOW TABLES LIKE '" . $table_prefix . "mod_user_config" . "'"))) 
+if (!$db->sql_numrows($db->sql_query("SHOW TABLES LIKE '" . $table_prefix . "mod_user_config'")))
 {
 	    // sinon on la crée 
     $query = "CREATE TABLE `" . $table_prefix . "mod_user_config` (
@@ -83,8 +83,8 @@ if (!$db->sql_numrows($db->sql_query("SHOW TABLES LIKE '" . $table_prefix . "mod
 				`user_id` INT(11) NOT NULL,
 				`value` VARCHAR(255) NOT NULL,
 			 PRIMARY KEY (`mod`, `config`, `user_id`),
-			 UNIQUE KEY `config` (`config`),
+			 UNIQUE KEY `config` (`config`)
 			)
-			COLLATE='utf8_general_ci'";
+			DEFAULT CHARSET = utf8";
     $db->sql_query($query);
 }
