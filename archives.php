@@ -22,7 +22,7 @@ if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 //Définitions
 global $db, $table_prefix, $pub_mois, $pub_annee, $resultgains;
 
-$query = "SELECT archives_date FROM " . TABLE_ATTAQUES_ARCHIVES . " WHERE `archives_user_id`='" . $user_data["user_id"] . "'";
+$query = "SELECT `archives_date` FROM " . TABLE_ATTAQUES_ARCHIVES . " WHERE `archives_user_id`='" . $user_data["user_id"] . "'";
 $result = $db->sql_query($query);
 $nbline = $db->sql_numrows($result);
 
@@ -47,7 +47,6 @@ while (list($date) = $db->sql_fetch_row($result)) {
     }
 }
 echo "</tr></table>";
-//echo "<a href='index.php?action=attaques&page=archive&mois=01&annee=2008'>Test</a>";
 echo "<br />";
 echo "<input type='submit'	value='Afficher' name='B1'></form>";
 echo "</fieldset>";
@@ -115,7 +114,7 @@ if ((isset($pub_mois)) && (isset($pub_annee))) {
         $bbcode .= "Total du métal recyclé : " . number_format($archives_recy_metal, 0, ',', ' ') . "\n";
         $bbcode .= "Total du cristal recyclé : " . number_format($archives_recy_cristal, 0, ',', ' ') . "\n\n";
         if ($renta > 0) $bbcode .= "Rentabilité : [color=#00FF40]" . number_format($renta, 0, ',', ' ') . "[/color]\n\n"; else $bbcode .= "Rentabilité : [color=#FF0000]" . number_format($renta, 0, ',', ' ') . "[/color]\n\n";
-        $bbcode .= "[url=http://www.ogsteam.fr/forums/sujet-1358-mod-gestion-attaques]Généré par le module de gestion des attaques[/url]";
+        $bbcode .= "[url=https://forum.ogsteam.fr]Généré par le module de gestion des attaques[/url]";
 
         echo "<table width='100%'><tr align='left'>";
         echo "<td width='40%'>" . "<table width='100%'><colgroup><col width='55%'/><col/></colgroup><tbody>" . "<tr>" . "<td style='font-size: 18px;color: white;'><b>Nombre d'attaques durant le mois</b></td>" . "<td class='metal number' style='font-size: 18px;'>" . number_format($archives_nb_attaques, 0, ',', ' ') . "</td>" . "</tr><tr><td colspan='2'>&#160;</td></tr><tr>" . "<td style='font-size: 18px;color: white;'><b>M&eacute;tal gagn&eacute;</b></td>" . "<td class='metal number' style='font-size: 18px;'>" . number_format($archives_metal, 0, ',', ' ') . "</td>" . "</tr><tr>" . "<td style='font-size: 18px;color: white;'><b>Cristal gagn&eacute;</b></td>" . "<td class='cristal number' style='font-size: 18px;'>" . number_format($archives_cristal, 0, ',', ' ') . "</td>" . "</tr><tr>" . "<td style='font-size: 18px;color: white;'><b>Deut&eacute;rium gagn&eacute;</b></td>" . "<td class='deuterium number' style='font-size: 18px;'>" . number_format($archives_deut, 0, ',', ' ') . "</td>" . "</tr><tr>" . "<td style='font-size: 18px;color: white;'><b>Gains attaques</b></td>" . "<td class='number' style='font-size: 18px;color: white;'>" . number_format($total_gains, 0, ',', ' ') . "</td>" . "</tr><tr>" . "<td style='font-size: 18px;color: white;'><b>Pertes attaques</b></td>" . "<td class='perte number' style='font-size: 18px;'>" . number_format($archives_pertes, 0, ',', ' ') . "</td>" . "</tr><tr>" . "<td style='font-size: 18px;color: white;'><b>Rentabilit&eacute; attaques</b></td>" . "<td class='renta number' style='font-size: 18px;'>" . number_format(($total_gains - $archives_pertes), 0, ',', ' ') . "</td>" . "</tr><tr><td colspan='2'>&#160;</td></tr><tr>" . "<td style='font-size: 18px;color: white;'><b>M&eacute;tal recycl&eacute;</b></td>" . "<td class='metal number' style='font-size: 18px;'>" . number_format($archives_recy_metal, 0, ',', ' ') . "</td>" . "</tr><tr>" . "<td style='font-size: 18px;color: white;'><b>Cristal recycl&eacute;</b></td>" . "<td class='cristal number' style='font-size: 18px;'>" . number_format($archives_recy_cristal, 0, ',', ' ') . "</td>" . "</tr><tr>" . "<td style='font-size: 18px;color: white;'><b>Gains recyclages</b></td>" . "<td class='renta number' style='font-size: 18px;'>" . number_format(($archives_recy_metal + $archives_recy_cristal), 0, ',', ' ') . "</td>" . "</tr><tr><td colspan='2'>&#160;</td></tr><tr>" . "</tr><tr><td colspan='2'>&#160;</td></tr><tr>" . "<td style='font-size: 18px;color: white;'><b>Rentabilité totale</b></td>" . "<td class='renta number' style='font-size: 18px;'>" . number_format((($total_gains - $archives_pertes) + ($archives_recy_metal + $archives_recy_cristal)), 0, ',', ' ') . "</td>" . "</tr>" . "<tr><td colspan='2'>&#160;</td></tr>" . "<tr><td colspan='2'>&#160;</td></tr>" . "<tr><td colspan='2'>&#160;</td></tr>" . "<tr><td colspan='2'>" . "<big>Résultats en BBCode</big><br/>" . "<a href='#haut' onclick='selectionner()'>Selectionner</a>" . "<form method='post'><textarea rows='3' cols='15' id='bbcode'>" . $bbcode . "</textarea></form>" . "</td></tr><tbody></table>" . "</td>";
@@ -126,7 +125,6 @@ if ((isset($pub_mois)) && (isset($pub_annee))) {
         /** GRAPHIQUE **/
         echo "<div id='graphique1' style='height: 350px; width: 800px; margin: 0pt auto; clear: both;'></div>";
         /** GRAPHIQUE **/
-//echo create_pie(($archives_metal+$archives_recy_metal) . "_x_" . ($archives_cristal+$archives_recy_cristal) . "_x_" . $archives_deut . "_x_" . $archives_pertes, "Métal_x_Cristal_x_Deutérium_x_Pertes", "Ressources gagnées", "graphique1");
         echo create_pie_numbers(($archives_metal + $archives_recy_metal) . "_x_" . ($archives_cristal + $archives_recy_cristal) . "_x_" . $archives_deut . "_x_" . $archives_pertes, "Métal_x_Cristal_x_Deutérium_x_Pertes", "Ressources gagnées", "graphique1");
         ?>
         <br/>
@@ -134,7 +132,6 @@ if ((isset($pub_mois)) && (isset($pub_annee))) {
         /** GRAPHIQUE **/
         echo "<div id='graphique2' style='height: 350px; width: 800px; margin: 0pt auto; clear: both;'></div>";
         /** GRAPHIQUE **/
-//echo create_pie($total_gains . "_x_" . $total_recy, "Gains_x_Recyclages", "Gains - Recyclages", "graphique2");
         echo create_pie_numbers($total_gains . "_x_" . $total_recy, "Gains_x_Recyclages", "Gains - Recyclages", "graphique2");
         ?>
         <?php

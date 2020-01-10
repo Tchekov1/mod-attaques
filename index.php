@@ -29,8 +29,6 @@ if(!defined("TABLE_MOD_USER_CFG"))
 //récupération des paramètres de config
 $config = mod_get_option('config');
 $config = json_decode($config, true);
-print_r($config);
-
 
 // Appel des fonctions du module
 include(FOLDER_ATTCK . "/attack_include.php");

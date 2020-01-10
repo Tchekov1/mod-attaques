@@ -46,10 +46,11 @@ $query = "CREATE TABLE " . TABLE_ATTAQUES_ARCHIVES . " (" . " archives_id INT NO
 $db->sql_query($query);
 
 // on insère les valeurs de configuration par défaut
-$sqldata = 'a:4:{s:5:"layer";i:1;s:9:"defenseur";i:1;s:6:"transp";i:75;s:5:"histo";i:1;}';
+$sqldata = '{"transp":75,"layer":1,"defenseur":1,"histo":1}';
 mod_set_option('config', $sqldata);
+
 // on insère les valeurs bbcodes par défaut
-$sqldata = 'a:8:{s:5:"title";s:7:"#FFA500";s:3:"m_g";s:7:"#00FF40";s:3:"c_g";s:7:"#00FF40";s:3:"d_g";s:7:"#00FF40";s:3:"m_r";s:7:"#00FF40";s:3:"c_r";s:7:"#00FF40";s:5:"perte";s:7:"#FF0000";s:5:"renta";s:7:"#00FF40";}';
+$sqldata = '{"title":"#FFA500","m_g":"#00FF40","c_g":"#00FF40","d_g":"#00FF40","m_r":"#00FF40","c_r":"#00FF40","perte":"#FF0000","renta":"#00FF40"}';
 mod_set_option('bbcodes', $sqldata);
 
 //On vérifie que la table xtense_callbacks existe (Xtense2)
