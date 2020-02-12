@@ -13,6 +13,9 @@
 // L'appel direct est interdit....
 if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 
+use Ogsteam\Ogspy\Model\Mod_Model;
+use Ogsteam\Ogspy\Model\Mod_Config_Model;
+
 if (class_exists("Callback")) {
     /**
      * Class Attaques_Callback
@@ -74,7 +77,7 @@ function attack_rc($rapport)
         return FALSE;
 
     //On regarde dans les coordonnées de l'espace personnel du joueur qui insère les données via le plugin si il fait partie des attaquants et/ou des défenseurs
-    $query = "SELECT coordinates FROM " . TABLE_USER_BUILDING . " WHERE user_id='" . $user_data['user_id'] . "'";
+    $query = "SELECT `coordinates` FROM " . TABLE_USER_BUILDING . " WHERE `user_id` ='" . $user_data['user_id'] . "'";
     $result = $db->sql_query($query);
     $coordinates = array();
     while ($coordinate = $db->sql_fetch_row($result))
@@ -130,7 +133,7 @@ function attack_rc($rapport)
         }
 
         //On vérifie que cette attaque n'a pas déja été enregistrée
-        $query = "SELECT attack_id FROM " . TABLE_ATTAQUES_ATTAQUES . " WHERE attack_user_id='" . $user_data['user_id'] . "' AND attack_date='$timestamp' AND attack_coord='$coord_attaque' ";
+        $query = "SELECT `attack_id` FROM " . TABLE_ATTAQUES_ATTAQUES . " WHERE `attack_user_id` ='" . $user_data['user_id'] . "' AND `attack_date`='$timestamp' AND `attack_coord`='$coord_attaque' ";
         $result = $db->sql_query($query);
         $nb = $db->sql_numrows($result);
 
@@ -162,7 +165,7 @@ function attack_rr($rapport)
         $timestamp = $rapport['time'];
         $coordonne = $rapport['coords'][0] . ":" . $rapport['coords'][1] . ":" . $rapport['coords'][2];
         //On vérifie que ce recyclage n'a pas déja été enregistrée
-        $query = "SELECT recy_id FROM " . TABLE_ATTAQUES_RECYCLAGES . " WHERE recy_user_id='" . $user_data['user_id'] . "' AND recy_date='$timestamp' AND recy_coord='$coordonne' ";
+        $query = "SELECT `recy_id` FROM " . TABLE_ATTAQUES_RECYCLAGES . " WHERE `recy_user_id` ='" . $user_data['user_id'] . "' AND `recy_date` ='$timestamp' AND `recy_coord` ='$coordonne' ";
         $result = $db->sql_query($query);
         $nb = $db->sql_numrows($result);
         // Si on ne trouve rien
@@ -180,10 +183,10 @@ function attack_rr($rapport)
 function read_config ()
 {
     global $attack_config;
-    
+
     //récupération des paramètres de config
-    var $configs = mod_get_option('config');
-    foreach($configs as $config) $attack_config = unserialize($config);
+    $configs =(new Mod_Config_Model)->get_mod_config('Attaques', 'config');
+    $attack_config = json_decode($configs, true);
 }
 
 /*
@@ -198,4 +201,3 @@ function remove_htm($rapport)
     $rapport = str_replace(".", "", $rapport);
     return $rapport;
 }
-
