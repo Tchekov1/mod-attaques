@@ -13,9 +13,6 @@
 // L'appel direct est interdit....
 if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 
-use Ogsteam\Ogspy\Model\Mod_Model;
-use Ogsteam\Ogspy\Model\Mod_Config_Model;
-
 if (class_exists("Callback")) {
     /**
      * Class Attaques_Callback
@@ -30,9 +27,7 @@ if (class_exists("Callback")) {
          */
         public function attack_rc($rapport)
         {
-            global $io;
-            if (attack_rc($rapport)) return Io::SUCCESS; else
-                return Io::ERROR;
+            return  attack_rc($rapport);
         }
 
         /**
@@ -41,9 +36,7 @@ if (class_exists("Callback")) {
          */
         public function attack_rr($rapport)
         {
-            global $io;
-            if (attack_rr($rapport)) return Io::SUCCESS; else
-                return Io::ERROR;
+            return attack_rr($rapport);
         }
 
         /**
@@ -68,25 +61,26 @@ $xtense_version = "2.3.9";
 function attack_rc($rapport)
 {
     global $db, $table_prefix, $attack_config, $user_data;
-    //$rapport = remove_htm($rapport["content"]);
-    //definition de la table attaques
     define("TABLE_ATTAQUES_ATTAQUES", $table_prefix . "attaques_attaques");
     read_config();
 
     if (!isset($rapport['json']))
-        return FALSE;
+        return false;
 
     //On regarde dans les coordonnées de l'espace personnel du joueur qui insère les données via le plugin si il fait partie des attaquants et/ou des défenseurs
+
     $query = "SELECT `coordinates` FROM " . TABLE_USER_BUILDING . " WHERE `user_id` ='" . $user_data['user_id'] . "'";
+    //log_('debug', $query);
     $result = $db->sql_query($query);
     $coordinates = array();
-    while ($coordinate = $db->sql_fetch_row($result))
+    while ($coordinate = $db->sql_fetch_row($result)) {
         $coordinates[] = $coordinate[0];
-
+    }
     $rc = json_decode($rapport['json']);
 
     //Coordonnées où a eu lieu l'attaque
     $coord_attaque = "{$rc->coordinates->galaxy}:{$rc->coordinates->system}:{$rc->coordinates->position}";
+    //log_('debug', $coord_attaque);
 
     if ($rc->result != 'attacker') //Si l'attaquant ne gagne pas alors il ne prend pas de ressources !
     {
@@ -113,17 +107,30 @@ function attack_rc($rapport)
     $attaquant = 0;
     $defenseur = 0;
 
-    if (count(array_intersect($coords_attaquants, $coordinates)) > 0)
+    if (count(array_intersect($coords_attaquants, $coordinates)) > 0) {
         $attaquant = 1;
-    if (count(array_intersect($coords_defenseurs, $coordinates)) > 0)
+    }
+    if (count(array_intersect($coords_defenseurs, $coordinates)) > 0) {
         $defenseur = 1;
+    }
 
     // le rapport ne concerne pas l'utilisateur, ou que l'on ne tiens pas compte des attaques subies
     // On ne va pas plus loin
-    if ($attaquant != 1 && ($defenseur != 1 || $attack_config['defenseur'] != 1)) {
+    //log_('debug', "Attack Config: " . $attack_config['defenseur']);
+    //log_('debug', "I am the Attacker: " . $attaquant);
+    //log_('debug', "I am the Defender: " . $defenseur);
+    /*Cas 1 : Attaquant = 0 Def = 0 Config = 0|1 -> RC Refusé
+      Cas 2 : Attaquant = 0 Def = 1 Config = 0 -> RC Refusé
+      Cas 3 : Attaquant = 0 Def = 1 Config = 1 -> RC Accepté
+      Cas 4 : Attaquant = 1 Def = 0 Config = 0 -> RC Accepté
+      Cas 5 : Attaquant = 1 Def = 0 Config = 1 -> RC Accepté
+      Cas 6 : Impossible Att toujours différent de Def
+     */
+    if ($attaquant !== 1 && ($defenseur !== 1 || $attack_config['defenseur'] !== 1)) { // vrai & faux | vrai
+        //log_('debug', "Erreur : RC non pris en compte");
         return false;
     } else {
-        if ($defenseur == 1 && $attack_config['defenseur'] == 1) {
+        if ($defenseur === 1 && $attack_config ['defenseur'] === 1) {
             //Récupération des pertes défenseurs
             $pertes = $rc->statistic->lostUnitsDefender;
             //On soustrait les ressources volées
@@ -146,7 +153,7 @@ function attack_rc($rapport)
         }
     }
 
-    return TRUE;
+    return true;
 }
 
 /**
@@ -160,7 +167,7 @@ function attack_rr($rapport)
     define("TABLE_ATTAQUES_RECYCLAGES", $table_prefix . "attaques_recyclages");
 
     if (!$rapport['time']) {
-        return FALSE;
+        return false;
     } else {
         $timestamp = $rapport['time'];
         $coordonne = $rapport['coords'][0] . ":" . $rapport['coords'][1] . ":" . $rapport['coords'][2];
@@ -176,28 +183,17 @@ function attack_rr($rapport)
                     NULL , '" . $user_data['user_id'] . "', '" . $coordonne . "', '" . $timestamp . "', '" . $rapport['M_reco'] . "', '" . $rapport['C_reco'] . "')";
             $db->sql_query($query);
         }
-        return TRUE;
+        return true;
     }
 }
 
 function read_config ()
 {
-    global $attack_config;
+    global $attack_config,$db;
 
     //récupération des paramètres de config
-    $configs =(new Mod_Config_Model)->get_mod_config('Attaques', 'config');
+    $request = "SELECT `value` FROM `" . TABLE_MOD_CFG . "` WHERE `mod` = 'Attaques' AND  `config` = 'config'";
+    $queryResult = $db->sql_query($request);
+    $configs = $db->sql_fetch_row($queryResult);
     $attack_config = json_decode($configs, true);
-}
-
-/*
- * @param $rapport
- * @return mixed|string
- */
-function remove_htm($rapport)
-{
-    $rapport = stripslashes($rapport);
-    $rapport = html_entity_decode($rapport);
-    $rapport = strip_tags($rapport);
-    $rapport = str_replace(".", "", $rapport);
-    return $rapport;
 }
