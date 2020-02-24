@@ -106,7 +106,7 @@ if (isset($pub_submitid)) {
     if (!$db->sql_query($query)) die("erreur SQL");
     $query = "OPTIMIZE TABLE " . TABLE_ATTAQUES_RECYCLAGES;
     if (!$db->sql_query($query)) die("erreur SQL");
-    echo "<font size='2' color='00FF40'>nettoyage effectu&eacute;e</font><br />";
+    echo "<span  style=\"font-size: x-small; color: #00FF40; \">nettoyage effectu&eacute;e</span><br />";
 }
 // Fin du nettoyage
 // Connexion Xtense2
@@ -129,26 +129,9 @@ if (isset($pub_submitxt2)) {
     $db->sql_query($query);
 }
 
-// Appel des Javscripts pour le Colorpicker - Pris à Oxyfox et REStyler
-echo "<link rel='stylesheet' type='text/css' href='" . FOLDER_ATTCK . "/ColorPicker/ColorPicker.css' />
-<script type='text/javascript' src='" . FOLDER_ATTCK . "/ColorPicker/CP_Class.js'></script>
-<script type='text/javascript'>
-window.onload = function()
-{
-    fctLoad();
-}
-window.onscroll = function()
-{
-    fctShow();
-}
-window.onresize = function()
-{
-    fctShow();
-}
-</script>";
 // cadre autour des paramètres
 echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Administration ";
-echo help("Administration");
+echo help("attaques_Administration");
 echo "</font></b></legend>";
 // Formulaire des paramètres du module
 echo "<form name='form1' style=\"margin:0px;padding:0px; alignment: center;\" action='index.php?action=attaques&page=admin' enctype='multipart/form-data' method='post'>";
@@ -157,7 +140,7 @@ echo "<table width='60%' border='0'>
 <td class='c' colspan='2'>Paramètres du module</td>
 </tr>
 <tr>
-<th>Activer le layer " . help("layer") . " : </th>
+<th>Activer le layer " . help("attaques_layer") . " : </th>
 <th><input type='checkbox' name='layer' value='true' ";
 if ($config['layer'] == 1) {
     echo 'checked=checked';
@@ -165,7 +148,7 @@ if ($config['layer'] == 1) {
 echo "></th>
 </tr>
 <tr>
-<th> Valeur d'opacité " . help("transparence") . "&nbsp;: </th>
+<th> Valeur d'opacité " . help("attaques_transparence") . "&nbsp;: </th>
 <th><input type='textbox' name='transp' value='" . $config['transp'] . "' size='4'>&nbsp;%</th>
 </tr>
 <tr>
@@ -198,39 +181,31 @@ echo "<br />";
 echo "<form name='form2' style='margin:0px;padding:0px;alignment: center' action='index.php?action=attaques&page=admin' enctype='multipart/form-data' method='post'>";
 echo "<table width='60%' border='0'>
 <tr>
-  <td class='c' colspan='6'>BBCodes&nbsp;" . help("bbcolor") . "&nbsp;</td>
+  <td class='c' colspan='6'>BBCodes&nbsp;" . help("attaques_bbcolor") . "&nbsp;</td>
 </tr>";
 echo "<tr>
   <th width=35%>Titre</th>
   <th width='50px'align='center'><input type='textbox' name='title' value='" . $bbcolor['title'] . "' size='7'></th>
-  <th width='20px'><img src=" . FOLDER_ATTCK . "/ColorPicker/color.gif alt='choix de la couleur' onClick='fctShow(document.form2.title)' style='cursor:pointer' /></th>
   <th width=35%>M&eacute;tal gagn&eacute;</th>
   <th width='50px'align='center'><input type='textbox' name='m_g' value='" . $bbcolor['m_g'] . "' size='7'></th>
-  <th width='20px'><img src=" . FOLDER_ATTCK . "/ColorPicker/color.gif alt='choix de la couleur' onClick='fctShow(document.form2.m_g)' style='cursor:pointer' /></th>
 </tr>";
 echo "<tr>
   <th width=35%>Cristal gagn&eacute;</th>
   <th width='50px'align='center'><input type='textbox' name='c_g' value='" . $bbcolor['c_g'] . "' size='7'></th>
-  <th width='20px'><img src=" . FOLDER_ATTCK . "/ColorPicker/color.gif alt='choix de la couleur' onClick='fctShow(document.form2.c_g)' style='cursor:pointer' /></th>
   <th width=35%>Deut&eacute;rium gagn&eacute;</th>
   <th width='50px'align='center'><input type='textbox' name='d_g' value='" . $bbcolor['d_g'] . "' size='7'></th>
-  <th width='20px'><img src=" . FOLDER_ATTCK . "/ColorPicker/color.gif alt='choix de la couleur' onClick='fctShow(document.form2.d_g)' style='cursor:pointer' /></th>
 </tr>";
 echo "<tr>
   <th width=35%>M&eacute;tal recycl&eacute;</th>
   <th width='50px'align='center'><input type='textbox' name='m_r' value='" . $bbcolor['m_r'] . "' size='7'></th>
-  <th width='20px'><img src=" . FOLDER_ATTCK . "/ColorPicker/color.gif alt='choix de la couleur' onClick='fctShow(document.form2.m_r)' style='cursor:pointer' /></th>
   <th width=35%>Cristal recycl&eacute;</th>
   <th width='50px'align='center'><input type='textbox' name='c_r' value='" . $bbcolor['c_r'] . "' size='7'></th>
-  <th width='20px'><img src=" . FOLDER_ATTCK . "/ColorPicker/color.gif alt='choix de la couleur' onClick='fctShow(document.form2.c_r)' style='cursor:pointer' /></th>
 </tr>";
 echo "<tr>
   <th width=35%>Perte</th>
   <th width='50px'align='center'><input type='textbox' name='perte' value='" . $bbcolor['perte'] . "' size='7'></th>
-  <th width='20px'><img src=" . FOLDER_ATTCK . "/ColorPicker/color.gif alt='choix de la couleur' onClick='fctShow(document.form2.perte)' style='cursor:pointer' /></th>
   <th width=35%>Rentabilit&eacute;</th>
   <th width='50px'align='center'><input type='textbox' name='renta' value='" . $bbcolor['renta'] . "' size='7'></th>
-  <th width='20px'><img src=" . FOLDER_ATTCK . "/ColorPicker/color.gif alt='choix de la couleur' onClick='fctShow(document.form2.renta)' style='cursor:pointer' /></th>
 </tr>";
 echo "<tr>
   <td colspan='6' class='c' align='center'><input name='submitbb' type='submit' value='Envoyer'></td>
@@ -240,10 +215,9 @@ echo "</table></form>";
 echo "<br />";
 
 // Formulaire "Base de Donnees"
-echo "<form name='form3' style=\"margin:0;padding:0; alignment: center;\" action='index.php?action=attaques&page=admin' enctype='multipart/form-data' method='post'>";
 echo "<table width='60%' border='0'>
 <tr>
-  <td class='c' colspan='5'>Base de données " . help("mysql") . "&nbsp;</td>
+  <td class='c' colspan='5'>Base de données " . help("attaques_mysql") . "&nbsp;</td>
 	</tr>";
 echo "<tr>";
 // On récupère les dates des archives présentes dans la base de données par ordre croissant 
@@ -352,7 +326,7 @@ if ($inval_id > 0) {
 echo "<form name='form5' style=\"margin:0;padding:0; alignment: center;\" action='index.php?action=attaques&page=admin' enctype='multipart/form-data' method='post'>";
 echo "<table width='60%' border='0'>
 <tr>
-  <td class='c' colspan='5'>Xtense 2&nbsp;" . help("xtense") . "&nbsp;</td>
+  <td class='c' colspan='5'>Xtense&nbsp;" . help("attaques_xtense") . "&nbsp;</td>
 </tr>";
 echo "<tr>";
 //On vérifie que la table xtense_callbacks existe
@@ -373,9 +347,9 @@ if (!$db->sql_numrows($db->sql_query("SHOW TABLES LIKE '" . $table_prefix . "xte
         echo "<tr>";
         echo "<th>Souhaitez vous établir la connexion ?</th>";
         echo "</tr>";
-        echo "<tr><td class='c' align='center'><input name='submitxt2' type='submit' value='Connecter Xtense2'></td></tr>";
+        echo "<tr><td class='c' align='center'><input name='submitxt2' type='submit' value='Connecter Xtense'></td></tr>";
     } else {
-        echo "<th>Le module 'Gestion des Attaques' est correctement enregistré auprès de Xtense2</th>";
+        echo "<th>Le module 'Gestion des Attaques' est correctement enregistré auprès de Xtense</th>";
     }
 }
 echo "</tr></table></form>";

@@ -67,7 +67,7 @@ $pub_date_to = strftime("%d %b %Y", $pub_date_to);
 
 //Création du field pour choisir l'affichage (attaque du jour, de la semaine ou du mois
 echo "<fieldset><legend><b><font color='#0080FF'>Date d'affichage des attaques et des recyclages en BBCode ";
-echo help("changer_affichage");
+echo help("attaques_changer_affichage");
 echo "</font></b></legend>";
 
 echo "Afficher mes attaques et mes recyclages en BBCode : ";
@@ -110,7 +110,7 @@ $bbcode .= "[url=http://www.ogsteam.fr/]Généré par OGSpy et le module de gest
 
 //Création du field pour voir la liste des attaques en BBCode
 echo "<fieldset><legend><b><font color='#0080FF'>Liste des attaques en BBCode du " . $pub_date_from . " au " . $pub_date_to . " ";
-echo help("bbcode");
+echo help("attaques_bbcode");
 echo "</font></b></legend>";
 echo "<p align='left'><a href='#haut' onclick='selectionner()'>Selectionner</a></p>";
 echo "<form method='post'><textarea rows='7' cols='15' id='bbcode'>$bbcode</textarea></form></fieldset>";
@@ -134,7 +134,7 @@ $bbcode .= "[url=http://www.ogsteam.fr/]Généré par OGSpy et le module de gest
 
 //Création du field pour voir la liste des recyclages en BBCode
 echo "<fieldset><legend><b><font color='#0080FF'>Liste des recyclages en BBCode du " . $pub_date_from . " au " . $pub_date_to . " ";
-echo help("bbcode");
+echo help("attaques_bbcode");
 echo "</font></b></legend>";
 echo "<p align='left'><a href='#haut' onclick='selectionner2()'>Selectionner</a></p>";
 echo "<form method='post'><textarea rows='7' cols='15' id='bbcode2'>$bbcode</textarea></form></fieldset>";
@@ -180,7 +180,7 @@ $bbcode .= "[url=http://www.ogsteam.fr/]Généré par OGSpy et le module de gest
 
 //Création du field pour voir les gains en BBCode
 echo "<fieldset><legend><b><font color='#0080FF'>Gains en BBCode du " . $pub_date_from . " au " . $pub_date_to . " ";
-echo help("bbcode");
+echo help("attaques_bbcode");
 echo "</font></b></legend>";
 echo "<p align='left'><a href='#haut' onclick='selectionner3()'>Selectionner</a></p>";
 echo "<form method='post'><textarea rows='7' cols='15' id='bbcode3'>$bbcode</textarea></form></fieldset>";

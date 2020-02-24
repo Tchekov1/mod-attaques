@@ -28,7 +28,7 @@ $nbline = $db->sql_numrows($result);
 
 //Fieldset pour seletionner les dates de visualisation des gains
 echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Date d'affichage des attaques ";
-echo help("changer_affichage");
+echo help("attaques_changer_affichage");
 echo "</span></b></legend>";
 
 echo "Afficher mes résultats anterieurs : ";

@@ -131,7 +131,7 @@ $pub_date_to = strftime("%d %b %Y %H:%M", $pub_date_to);
 
 //Création du field pour choisir l'affichage (attaque du jour, de la semaine ou du mois
 echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Date d'affichage des recyclages ";
-echo help("changer_affichage");
+echo help("attaques_changer_affichage");
 echo "</span></b></legend>";
 
 echo "Afficher mes recyclages : ";
@@ -166,7 +166,7 @@ echo "<br><br>";
 
 //Création du field pour voir les gains des attaques
 echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Résultats des recyclages du " . $pub_date_from . " au " . $pub_date_to . " ";
-echo help("resultats");
+echo help("attaques_resultats");
 echo "</span></b></legend>";
 
 //Résultat requete
@@ -212,7 +212,7 @@ echo "</p></fieldset><br><br>";
 //Création du field pour voir la liste des attaques
 echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Liste des recyclages du " . $pub_date_from . " au " . $pub_date_to . " ";
 echo " : " . $nb_recy . " recyclage(s) ";
-echo help("liste_recy");
+echo help("attaques_liste_recy");
 echo "</span></b></legend>";
 
 //Tableau donnant la liste des attaques

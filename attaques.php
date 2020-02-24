@@ -87,7 +87,7 @@ if ($nb_result != 0) {
             $bbcode .= "Les pertes s'&eacute;lèvent à [color=" . $bbcolor[perte] . "]" . $attack_pertes . "[/color].\n\n";
         }
 
-        $bbcode .= "[url=http://board.ogsteam.fr/forums/sujet-1358-mod-gestion-attaques]G&eacute;n&eacute;r&eacute; par le module de gestion des attaques[/url]";
+        $bbcode .= "[url=https://forum.ogsteam.fr/index.php?topic=100.0]G&eacute;n&eacute;r&eacute; par le module de gestion des attaques avec OGSpy[/url]";
 
         echo "<br><br>";
         echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Liste de vos attaques du 01/" . $month . "/" . $year . " au 31/" . $month . "/" . $year . "</span></legend>";
@@ -121,7 +121,7 @@ if (isset($pub_attack_id)) {
     if ($user == $user_data['user_id']) {
         $query = "DELETE FROM " . TABLE_ATTAQUES_ATTAQUES . " WHERE attack_id='$pub_attack_id'";
         $db->sql_query($query);
-        echo "<blink><font color='FF0000'>L'attaque a bien été supprimée.</font></blink>";
+        echo "<blink><span style=\"color: FF0000; \">L'attaque a bien été supprimée.</span></blink>";
 
         //On ajoute l'action dans le log
         $line = $user_data['user_name'] . " supprime l'une de ses attaque dans le module de gestion des attaques";
@@ -129,7 +129,7 @@ if (isset($pub_attack_id)) {
         $line = "/*" . date("d/m/Y H:i:s") . '*/ ' . $line;
         write_file(PATH_LOG_TODAY . $fichier, "a", $line);
     } else {
-        echo "<blink><font color='FF0000'>Vous n'avez pas le droit d'effacer cette attaque !!!</font></blink>";
+        echo "<blink><span style=\"color: FF0000; \">Vous n'avez pas le droit d'effacer cette attaque !!!</span></blink>";
 
         //On ajoute l'action dans le log
         $line = $user_data[user_name] . " a tenté de supprimer une attaque qui appartient à un autre utilisateurs dans le module de gestion des attaques";
@@ -235,7 +235,7 @@ $pub_date_to = strftime("%d %b %Y %H:%M", $pub_date_to);
 
 //Création du field pour choisir l'affichage (attaque du jour, de la semaine ou du mois
 echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Paramètres d'affichage des attaques ";
-echo help("changer_affichage");
+echo help("attaques_changer_affichage");
 echo "</font></b></legend>";
 
 echo "Afficher les attaques : ";
@@ -272,7 +272,7 @@ echo "<br><br>";
 
 //Création du field pour voir les gains des attaques
 echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Résultats des attaques du " . $pub_date_from . " au " . $pub_date_to . " de " . $users[$user_id];
-echo help("resultats");
+echo help("attaques_resultats");
 echo "</font></b></legend>";
 
 //Résultat requete
@@ -311,7 +311,7 @@ echo "</p></fieldset><br><br>";
 //Création du field pour voir la liste des attaques
 echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Liste des attaques du " . $pub_date_from . " au " . $pub_date_to . " ";
 echo " : " . $nb_attack . " attaque(s) ";
-echo help("liste_attaques");
+echo help("attaques_liste_attaques");
 echo "</span></b></legend>";
 
 //Debut du lien pour le changement de l'ordre d'affichage

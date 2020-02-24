@@ -96,8 +96,8 @@ $pub_date_to = strftime("%d %b %Y %H:%M", $pub_date_to);
 
 
 //Création du field pour choisir l'affichage (attaque du jour, de la semaine ou du mois
-echo "<fieldset><legend><b><font color='#0080FF'>Date d'affichage du bilan ";
-echo help("changer_affichage");
+echo "<fieldset><legend><b><span style=\"color: #0080FF; \">Date d'affichage du bilan ";
+echo help("attaques_changer_affichage");
 echo "</font></b></legend>";
 
 echo "Afficher le bilan : ";
